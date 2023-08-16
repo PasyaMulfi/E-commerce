@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import auth from './modules/auth';
-
+import produk  from './modules/produk';
 
 
 
@@ -11,6 +11,7 @@ const store = createStore({
     },
     modules: {
         auth,
+        produk,
     },
 });
 
