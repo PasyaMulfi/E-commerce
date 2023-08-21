@@ -1,78 +1,44 @@
-import axios from "axios";
+import axios from 'axios';
 
 const produk = {
     namespaced: true,
     state: {
-        produkData: [],
+        dataProduk: [],
+        getProdukId :[]
     },
     getters: {
-        getProduk: (state) => state.produkData,
-        getProdukById: (state) => (produkId) => {
-            console.log("ProdukId:", produkId);
-            console.log("ProdukData:", state.produkData);
-            const produk = state.produkData.find((p) => p.id == produkId);
-            console.log('Produk:', produk);
-            return produk
-        },
-
-        ///by id
-
-        getProdukByCategory: (state) => (produkCategory) => {
-            const produk = state.produkData.filter(
-                (p) => p.category == produkCategory
-            );
-            return produk
-
-        }
+        getAllProduk: (state) => state.dataProduk,
     },
     actions: {
         async fetchProduk({ commit }) {
             try {
-                const data = await axios.get(
-                    "https://fakestoreapi.com/products"
-                );
-                commit("SET_PRODUK", data.data);
+                const urlBrand = 'https://ecommerce.olipiskandar.com/api/v1/product/latest/8';
+                const produkApi = await axios.get(urlBrand);
+                commit('SET_PRODUK', produkApi.data);
             } catch (error) {
                 alert(error);
                 console.log(error);
             }
         },
-        async fetchSingleProduk({ commit }, produkId) {
+        async fetchProdukid({ commit }, slug) {
             try {
-                const response = await axios.get(
-                    `https://fakestoreapi.com/products/${produkId}`
-                );
-                commit("SET_SINGLE_PRODUK", response.data);
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        },
-        async fetchFilterProduk({ commit }, produkCategory) {
-            try {
-                const response = await axios.get(
-                    `https://fakestoreapi.com/products/${produkCategory}`
-                );
-                commit("SET_FILTER_PRODUK", response.data);
+                const urlBrand = `https://ecommerce.olipiskandar.com/api/v1/product/details/${slug}`;
+                const produkApi = await axios.get(urlBrand);
+                commit('SET_PRODUK_ID', produkApi.data);
             } catch (error) {
                 alert(error);
                 console.log(error);
             }
         },
     },
-
-    //single
     mutations: {
         SET_PRODUK(state, produk) {
-            state.produkData = produk;
+            state.dataProduk = produk;
         },
-        SET_SINGLE_PRODUK(state, produk) {
-            state.singleData = produk;
+        SET_PRODUK_ID(state, produk) {
+            state.getProdukId = produk;
         },
-        SET_FILTER_PRODUK(state, produk) {
-            state.filterData = produk;
-        }
-    }
-}
+    },
+};
 
 export default produk;

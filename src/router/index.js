@@ -6,8 +6,11 @@ import SingleProduk from "../views/SingleProduk.vue"
 import Cart from "../views/Cart.vue"
 import Checkout from "../views/Checkout.vue"
 import Contact from "../views/Contact.vue"
+import Brands from "../views/Brands.vue"
+import Category from "../views/Category.vue";
 
-
+const merk = 'ArtisanAlley';
+ 
 const routes = [
     {
         path: "/",
@@ -26,9 +29,10 @@ const routes = [
         component: Produk,
     },
     {
-        path: "/produk/:id",
+        path: "/produk/:slug",
         name: "SingleProduk",
         component: SingleProduk,
+        props: true,
     },
     {
         path: "/cart",
@@ -45,6 +49,18 @@ const routes = [
         name: "contact",
         component: Contact,
     },
+    {
+        path: '/brands',
+        name: 'Brands',
+        component: Brands,
+        meta: { title: merk + ' | ' + 'Brands' },
+    },
+    {
+        path: '/category',
+        name: 'Category',
+        component: Category,
+        meta: { title: merk + ' | ' + 'Category' },
+    },
 ]
 
 
@@ -55,20 +71,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresGuest && store.getters["auth/isAuthenticated"]) {
-        next("/");
-    } else {
-        next();
+    if (to.meta.title) {
+        document.title = to.meta.title;
     }
+    next();
 });
-
-
-router.beforeEach((to, from, next) => {
-    if (to.meta.requiresLogin && store.getters["auth/isAuthenticated"]) {
-        next("/login");
-    } else {
-        next();
-    }
-});
-
-export default router;  
+export default router;

@@ -1,6 +1,8 @@
 import { createStore } from 'vuex';
 import auth from './modules/auth';
-import produk  from './modules/produk';
+import produk from './modules/produk';
+import brands from "./modules/brands";
+import category from './modules/category';
 
 
 
@@ -10,8 +12,10 @@ const store = createStore({
         isLoading: false,
     },
     modules: {
-        auth,
-        produk,
+    auth,
+    produk,
+    brands,
+    category
     },
 });
 
