@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <nav class="bg-white border-gray-200 dark:bg-black-100">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <router-link to="/" class="flex items-center">
         <img src="https://play-lh.googleusercontent.com/7CL8WfXiGVF_GO-KQv65qTAryEjbqvLm8RLOdhjRUTsITwypN6Ynx0gJ1t3zrqSmUO0 " class="h-14 mr-3" alt="Flowbite Logo" />
@@ -52,6 +52,10 @@
                 <router-link to="/cart"
                   class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cart</router-link>
               </li>
+              <li>
+                  <router-link to="/profile"
+                    class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Profile</router-link>
+                </li>
         </ul>
       </div>
     </div>

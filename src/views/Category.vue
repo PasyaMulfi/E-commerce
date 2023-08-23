@@ -3,7 +3,7 @@
         <div class="pt-20 container mx-auto px-4 bg ">
             <h2 class="text-center text-3xl font-bold">Category</h2>
             <div class="grid mt-10 grid-cols-4 gap-4">
-                <div v-for="category in getAllCategory.data.slice(0,8)" :key="category.id">
+                <div v-for="category in getAllCategory.data.slice(0,12)" :key="category.id">
 
                     <a href="#"
                         class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">

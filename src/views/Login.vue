@@ -27,7 +27,7 @@
 
                     <div>
                         <div class="relative mt-2 w-full">
-                            <input v-model="password" type="text" id="password"
+                            <input v-model="password" type="password" id="password"
                                 class="border-1 peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-2.5 pt-4 pb-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
                                 placeholder=" " />
                             <label for="password"
@@ -41,8 +41,8 @@
                             class="shrink-0 inline-block w-36 rounded-lg bg-blue-600 py-3 font-bold text-white">
                             Login
                         </button>
-                        <a class="w-full text-center text-sm font-medium text-gray-600 hover:underline" href="#">Lupa
-                            Password Kamu :
+                        <a class="w-full text-center text-sm font-medium text-gray-600 hover:underline" href="/register">Belum Punya Akun?
+                            
                         </a>
                     </div>
                     <!-- <p class="text-center text-gray-600">
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -66,6 +66,9 @@ export default {
             password: '',
         };
     },
+    computed: {
+        ...mapGetters('auth', ['loginError', 'isAuthenticated'])
+    },
     methods: {
         ...mapActions('auth', ['login']),
         async performLogin() {
@@ -73,14 +76,16 @@ export default {
                 email: this.email,
                 password: this.password,
             };
-
+        
             const success = await this.login(credentials);
-
-            if (success) {
-                // Redirect to the desired route on successful login
+            if (success && this.isAuthenticated) {
                 this.$router.push('/');
             } else {
-                alert('Login Failed');
+                if (this.loginerror) {
+                    alert(this.loginerror);
+                } else {
+                    alert("Login Failed")
+                }
             }
         },
     },

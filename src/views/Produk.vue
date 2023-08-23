@@ -7,7 +7,7 @@
                 <router-link :to="{ name: 'SingleProduk', params: { slug: produk.slug } }" class="group">
                     <img class="p-8 rounded-t-lg object-contain h-80 w-60 ml-10" src="../assets/images/gucci.jpg" alt="product image" />
                 </router-link>
-                <div class="px-10 pb-5">
+                <div class="px-10 pb-5">                        
                     <a href="">
                         <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ produk.name }}
                         </h5>

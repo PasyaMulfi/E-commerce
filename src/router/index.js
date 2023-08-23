@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/Home.vue"
 import Login from "../views/Login.vue"
+import Register from "../views/Register.vue"
 import Produk from "../views/Produk.vue"
 import SingleProduk from "../views/SingleProduk.vue"
 import Cart from "../views/Cart.vue"
@@ -8,6 +9,7 @@ import Checkout from "../views/Checkout.vue"
 import Contact from "../views/Contact.vue"
 import Brands from "../views/Brands.vue"
 import Category from "../views/Category.vue";
+import Profile from "../views/Profile.vue"
 
 const merk = 'ArtisanAlley';
  
@@ -21,6 +23,12 @@ const routes = [
         path: "/Login",
         name: "Login",
         component: Login,
+        requestGuest: true,
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: Register,
         requestGuest: true,
     },
     {
@@ -60,6 +68,12 @@ const routes = [
         name: 'Category',
         component: Category,
         meta: { title: merk + ' | ' + 'Category' },
+    },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: Profile,
+        props: true,
     },
 ]
 

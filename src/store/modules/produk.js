@@ -4,7 +4,7 @@ const produk = {
     namespaced: true,
     state: {
         dataProduk: [],
-        getProdukId :[]
+        getProdukId: []
     },
     getters: {
         getAllProduk: (state) => state.dataProduk,
@@ -12,7 +12,7 @@ const produk = {
     actions: {
         async fetchProduk({ commit }) {
             try {
-                const urlBrand = 'https://ecommerce.olipiskandar.com/api/v1/product/latest/8';
+                const urlBrand = `https://ecommerce.olipiskandar.com/api/v1/product/latest/8`;
                 const produkApi = await axios.get(urlBrand);
                 commit('SET_PRODUK', produkApi.data);
             } catch (error) {
