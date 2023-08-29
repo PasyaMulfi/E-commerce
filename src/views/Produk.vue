@@ -3,14 +3,15 @@
     <div class="bg">
         <div class="grid grid-cols-4 gap-10">
             <div class="w-full max-w-sm  bg-white border border-gray-400 rounded-lg shadow dark:bg-gray-1000 dark:border-gray-700 "
-                v-for="produk in getAllProduk.data" :key="produk.id">
+                v-for="produk in getLatestProduk" :key="produk.id">
                 <router-link :to="{ name: 'SingleProduk', params: { slug: produk.slug } }" class="group">
-                    <img class="p-8 rounded-t-lg object-contain h-80 w-60 ml-10" src="../assets/images/gucci.jpg" alt="product image" />
+                    <img class="p-8 rounded-t-lg object-contain h-80 w-60 ml-10" src="../assets/images/travisscoot.jpg" alt="product image" />
                 </router-link>
                 <div class="px-10 pb-5">                        
                     <a href="">
                         <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ produk.name }}
                         </h5>
+                        <!-- <p> {{ produk.slug }} </p> -->
                     </a>
                     <div class="flex items-center mt-2.5 mb-5">
                         <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +68,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
     computed: {
-        ...mapGetters('produk', ['getAllProduk']),
+        ...mapGetters('produk', ['getLatestProduk']),
     },
     methods: {
         ...mapActions('produk', ['fetchProduk'])

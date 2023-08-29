@@ -5,11 +5,16 @@ const auth = {
     state: {
         token: localStorage.getItem('token') || '',
         loginError: null,
-        user: JSON.stringify(localStorage.getItem("user")) || null,
+        user: JSON.stringify(localStorage.getItem("user") || null),
+        userAddress: {},
+        userInfo: {},
     },
     getters: {
         isAuthenticated: (state) => !!state.token,
-        getUser: (state) => !! state.user
+        getUser: (state) => !!state.user,
+        getUserAddress: (state) => state.userAddress,
+        getUserInfo: (state) => state.userInfo
+
     },
     actions: {
         async login({ commit }, credentials) {
@@ -46,7 +51,7 @@ const auth = {
 
                 // Save token to localStorage
                 localStorage.setItem('token', token);
-                
+
                 commit('SET_TOKEN', token);
                 console.log("Token saved:", token);
 
@@ -56,28 +61,64 @@ const auth = {
                 return false;
             }
         },
-        async getUserInfo({ state }) {
+        async getUserInfo({ state, commit }) {
             try {
-                const respone = await axios.get(
+                const response = await axios.get(
                     "https://ecommerce.olipiskandar.com/api/v1/user/info",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${state.token}`,
+                        }
+                    }
+                );
+                commit("SET_USER_INFO", response.data['user']);
+                console.log(response.data['user']);
+
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        },
+        async fetchUser({ commit }) {
+            try {
+                const token = localStorage.getItem('token');
+                const urlUser = 'https://ecommerce.olipiskandar.com/api/v1/user/info';
+                const userApi = await axios.get(urlUser, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                commit('SET_USER', userApi.data['user']);
+            } catch (error) {
+                alert(error);
+                console.log(error);
+            }
+        },
+        async getUserAddress({ state, commit }) {
+            try {
+                const response = await axios.get(
+                    "https://ecommerce.olipiskandar.com/api/v1/user/addresses",
                     {
                         headers: {
                             Authorization: `Bearer ${state.token}`,
                         },
                     }
                 );
-                return respone.data.user;
+                commit("SET_USER_ADDRESS", response.data.data[0]);
+                console.log(response.data.data[0]);
+                return response.data;
             } catch (error) {
                 console.error(error);
                 return null;
             }
         },
+
         logout({ commit }) {
             // Remove token from localStorage
             const token = localStorage.getItem("token");
             localStorage.removeItem("token");
             commit("SET_TOKEN", "");
-           
+
             //   Log Token removed
             console.log("Token Removed:", token);
             this.$router.push("/login");
@@ -90,9 +131,15 @@ const auth = {
         SET_LOGIN_ERROR(state, error) {
             state.loginError = error;
         },
-        SET_USER( state, user) {
+        SET_USER(state, user) {
             state.user = user;
             // console.log("User data stored in store:", user);
+        },
+        SET_USER_ADDRESS(state, addressData) {
+            state.userAddress = addressData;
+        },
+        SET_USER_INFO(state, dataUser ) {
+            state.userInfo = dataUser;
         },
     },
 };

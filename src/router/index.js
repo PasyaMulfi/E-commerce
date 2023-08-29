@@ -9,7 +9,8 @@ import Checkout from "../views/Checkout.vue"
 import Contact from "../views/Contact.vue"
 import Brands from "../views/Brands.vue"
 import Category from "../views/Category.vue";
-import Profile from "../views/Profile.vue"
+import Profile from "../views/Profile.vue";
+import Order from"../views/Order.vue"
 
 const merk = 'ArtisanAlley';
  
@@ -18,6 +19,12 @@ const routes = [
         path: "/",
         name: "Home",
         component: Home,
+    },
+    {
+        path: "/checkout",
+        name: "Checkout",
+        component: () => import("../views/Checkout.vue"),
+        meta: { requiresLogin: true },
     },
     {
         path: "/Login",
@@ -73,6 +80,11 @@ const routes = [
         path: "/profile",
         name: "Profile",
         component: Profile,
+    },
+    {
+        path: "/order/:orderCode",
+        name: "Order",
+        component: Order,
         props: true,
     },
 ]

@@ -1,63 +1,72 @@
 <template>
     <!-- component -->
-<div class="flex items-center h-screen w-full justify-center">
+    <div class="flex items-center h-screen w-full justify-center">
 
-<div class="max-w-xs">
-    <div class="bg-white shadow-xl rounded-lg py-3">
-        <div class="photo-wrapper p-2">
-            <img class="w-32 h-32 rounded-full mx-auto" src="https://www.gravatar.com/avatar/2acfb745ecf9d4dccb3364752d17f65f?s=260&d=mp" alt="John Doe">
-        </div>
-        <div class="p-2">
-            <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ user.name }}</h3>
-            <div class="text-center text-gray-400 text-xs font-semibold">
-                <p>Web Developer</p>
+        <div class="max-w-xs">
+            <div class="bg-white shadow-xl rounded-lg py-3">
+                <div class="photo-wrapper p-2">
+                    <img class="w-32 h-32 rounded-full mx-auto " 
+                        src="../assets/images/kickavenue.jpg" alt="Kick Avenue">
+                </div>
+                <div class="p-2">
+                    <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ userInfo.name }}</h3>
+                    <div class="text-center text-gray-400 text-xs font-semibold">
+                        <p>{{ userInfo.email }}</p>
+                        <p>{{ userInfo.id }}</p>    
+                    </div>
+                    <!-- <table class="text-xs my-3">
+                        <tbody>
+                            <tr>
+                                <td class="px-2 py-2 text-gray-500 font-semibold">{{ userAddress.city }}, {{ userAddress.state }}</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-2 text-gray-500 font-semibold"></td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-2 text-gray-500 font-semibold"></td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                    <p class="mt-8 text-lg font-medium"></p>
+                <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
+                    <div class="flex flex-col rounded-lg bg-white sm:flex-row">
+                        <div class="flex w-full flex-col px-4 py-4">
+                            <span class="font-semibold">{{ userAddress.address }}</span>
+                            <span class="float-right text-gray-400">{{ userAddress.postal_code }}</span>
+                            <p class="text-lg font-bold">{{ userAddress.city }}, {{ userAddress.state }}</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                    <div class="text-center my-3">
+                        <a class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium"
+                            href="#">View Profile</a>
+                    </div>
+
+                </div>
             </div>
-            <table class="text-xs my-3">
-                <tbody><tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Address</td>
-                    <td class="px-2 py-2">Chatakpur-3, Dhangadhi Kailali</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Phone</td>
-                    <td class="px-2 py-2">+977 9955221114</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
-                    <td class="px-2 py-2">john@exmaple.com</td>
-                </tr>
-            </tbody></table>
-
-            <div class="text-center my-3">
-                <a class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium" href="#">View Profile</a>
-            </div>
-
         </div>
+
     </div>
-</div>
-
-</div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     computed: {
-        ...mapGetters("auth", ["getUser"]),
-        user() {
-            return this.getUser;
-        },
+        ...mapState("auth", ["userAddress"]),
+        ...mapState("auth", ["userInfo"])
     },
     methods: {
-        ...mapActions("auth", ["getUserInfo"]),
+        ...mapActions('auth', ['getUserAddress']),
+        ...mapActions('auth', ["getUserInfo"])
     },
-    async mounted() {
-        // Fetch user information
-        const user = await this.getUserInfo();
-
-        //if user information is retrieved, update the store
-        if (user) {
-            this.$store.commit("auth/SET_USER", user);
-        }
-    },
+    mounted() {
+        this.getUserAddress();
+        this.getUserInfo();
+       
+    }
 };
 </script>
+
